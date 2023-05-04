@@ -55,11 +55,11 @@ public class UserService implements IUserService {
 		oldEntity.setDistrict(userDTO.getDistrict());
 		oldEntity.setCity(userDTO.getCity());
 		oldEntity.setImage(userDTO.getImage());
-		oldEntity.setFirstLogin(0);
 		if(oldEntity.getRole().getId()==2 && oldEntity.isFirstLogin()==1) {
 			SportFieldEntity sportFieldEntity = sportFieldRepository.getOne(userDTO.getMySportField());
 			oldEntity.setMySportFieldEntity(sportFieldEntity);
 		}
+		oldEntity.setFirstLogin(0);
 		userRepository.save(oldEntity);
 		return userConverter.toDTO(oldEntity);
 	}

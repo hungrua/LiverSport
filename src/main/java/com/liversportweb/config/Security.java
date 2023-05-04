@@ -19,7 +19,7 @@ public class Security extends WebSecurityConfigurerAdapter{
 		http.csrf().disable();
 		http.authorizeRequests().antMatchers("/","/login","/booking","/user/bookings","/user/add","/register","/user/favorite/*","/user/information/editPage","/user/information/**").permitAll();
 
-		http.authorizeRequests().antMatchers("/admin/**","/admin/information/editPage","/admin/information","admin/information/save/*").hasAuthority("ADMIN");
+		http.authorizeRequests().antMatchers("/admin/**","admin/field","/admin/information/editPage","/admin/information","admin/information/save/*").hasAuthority("ADMIN");
 		http.authorizeRequests().antMatchers("/user/**","/booking","/sport_field","/user/field/**","/yourMatch").hasAuthority("USER");
 		http.authorizeRequests().and().formLogin()
 		.loginProcessingUrl("/j_spring_security_check")
