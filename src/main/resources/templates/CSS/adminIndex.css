@@ -1,0 +1,14 @@
+.tableMatch{
+    padding : 30px;
+    text-align: center;
+}
+.searchUserInput{
+    display: flex;
+    padding : 30px 0;
+    justify-content:space-between;
+}
+.searchUserInput .search-input{
+    box-sizing: border-box;
+    padding :5px;
+    margin-right: 5px;
+}

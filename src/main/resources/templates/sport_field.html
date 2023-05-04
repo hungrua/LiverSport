@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	<meta name="description" content="" />
+	<meta name="author" content="" />
+	<title>Blog Post - Start Bootstrap Template</title>
+	<!-- Favicon-->
+	<!-- <link rel="icon" type="image/x-icon" href="assets/favicon.ico" /> -->
+	<!-- Core theme CSS (includes Bootstrap)-->
+	<link href="/templates/CSS/shop-homepage.css" rel="stylesheet" />
+	<link href="/templates/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="/templates/CSS/sportfield.css" rel="stylesheet" />
+	<link rel="stylesheet" href="/templates/CSS/sportfield2.css" />
+	<link rel="stylesheet" href="/templates/CSS/mycss.css" />
+	<link href="/templates/CSS/shop-homepage.css" rel="stylesheet" />
+	<link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet" />
+	<link href="https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic"
+		rel="stylesheet" type="text/css" />
+	<script src="https://kit.fontawesome.com/b5df635135.js" crossorigin="anonymous"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+</head>
+
+<body>
+	<!-- Responsive navbar-->
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top header " th:object="${user}">
+		<div class="container nav-container">
+			<a class="navbar-brand nav-items" th:href="@{/user/page}">Liver Sport</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+				aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarResponsive">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item active nav-selection"><a class="nav-link nav-items"
+							th:href="@{/booking}">Booking <span class="sr-only">(current)</span></a></li>
+					<li class="nav-item nav-selection"><a class="nav-link nav-items" th:href="@{/yourMatch}">Your
+							match</a>
+					</li>
+					<li class="nav-item nav-selection"><a class="nav-link nav-items" th:href="@{/favorite}" >Favourite</a></li>
+					<li th:if="${user == null}" class="nav-item" style="display: flex; align-items: center;"><a
+							class="nav-link" id="login-tag" th:href="@{/login}">Login</a></li>
+					<li th:if="${user != null}" class="nav-item" style="display: flex; align-items: center;"><a
+							class="nav-link" id="greeting-tag" th:text="${user.fullName}"
+							th:attr="userId=${user.id},userName=${user.userName}"></a>
+					</li>
+					<li class="nav-item" style="padding: 0 10px;">
+						<a th:href="@{/user/information}">
+							<img th:if="${user != null}" th:src="@{'/templates/image/avatar/' +${user.image}}"
+								style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid aliceblue;object-fit: cover;" />
+						</a>
+					</li>
+					<li th:if="${user != null}" class="nav-item" style="display: flex; align-items: center;"><a
+							class="nav-link" th:href="@{/}"> <i class="fa-solid fa-right-from-bracket"> </i>
+						</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<!-- Page content-->
+	<div class="container mt-5">
+		<div class="row">
+			<div class="col-lg-12">
+				<!-- Post content-->
+				<article class="col-lg-12">
+					<!-- Post header-->
+					<header class="mb-4 ">
+						<!-- Post title-->
+						<div class="d-flex justify-content-lg-between">
+							<h1 class="fw-bolder mb-1" id="sport_field_name"> Sân bóng Hoàng Mai</h1>
+							<span id="heart" >
+								<span>Thêm vào danh sách yêu thích</span> 
+								<i class="fa fa-heart-o" aria-hidden="true"></i> 
+							</span>
+						</div>
+						<!-- Post meta content-->
+						<div class="text-muted fst-italic mb-2">
+							Địa chỉ: <span id="sport_field_address"> số 4 đường Nguyễn An Ninh, quận Hoàng Mai, Hà
+								Nội</span>
+						</div>
+						<!-- Post categories-->
+						<a class="badge bg-secondary text-decoration-none link-light" href="#description">Mô tả sân</a>
+						<a class="badge bg-secondary text-decoration-none link-light" href="#comment">Bình luận</a>
+					</header>
+					<div class="col-lg-12 sportFieldInfo">
+						<figure class="mb-4 " id="sportFieldImage">
+							<img class="img-fluid rounded image" src="/templates/image/sanbong/san1.jpg" />
+						</figure>
+						<div class="card mb-4 mt-lg-5 form">
+							<h3 style="text-align: center;">Đặt sân tại đây</h3>
+							<label for="date">Chọn ngày : </label> <input id="myDateInput" type="date" name="date"
+								min="" max="" value=""></input> <br></br>
+							<label for="time">Khung giờ : </label> <select name="time" id="time">
+								<option value="06:00:00">06:00 - 07:30</option>
+								<option value="08:00:00">08:00 - 09:30</option>
+								<option value="10:00:00">10:00 - 11:30</option>
+								<option value="16:00:00">16:00 - 17:30</option>
+								<option value="18:00:00">18:00 - 19:30</option>
+								<option value="20:00:00">20:00 - 21:30</option>
+								<option value="22:00:00">22:00 - 23:30</option>
+							</select> <br></br>
+							<button id="submit-time" onclick="getBookingInfo(sportFieldInfo)">Đặt
+								sân</button>
+							<h5 style="color: red; padding: 10px 0">Khi đặt sân cần lưu ý
+								các điều sau :</h5>
+							<ul>
+								<li class="rules">Yêu cầu đặt cọc trước 30% tiền sân</li>
+								<li class="rules">Bạn không thể hủy sân 2 tiếng trước khi
+									diễn ra trận đấu</li>
+								<li class="rules">Kiểm tra kĩ thông tin sân trước khi đặt
+									tránh việc đặt nhầm</li>
+							</ul>
+						</div>
+					</div>
+
+					<!-- Post content-->
+				</article>
+			</div>
+			<!-- Side widgets-->
+			<div class="col-lg-12 mt-lg-1 mb-5 container2">
+				<!-- Side widget-->
+				<section id="description" class="col-lg-8">
+					<h2 class="fw-bolder mb-4 mt-5">Mô tả sân</h2>
+					<div class="paragraph">
+						<p class="fs-5 mb-4">Sân bóng Đền Lừ 3 là sân bóng lâu đời,
+							mới được chủ đầu tư chỉnh trang, nâng cấp và đang là một trong
+							những sân bóng đẹp nhất Hà Nội. Với vị trí vô cùng thuận lợi,
+							nằm ngay mặt đường chính, đối diện là công viên hồ Đền Lừ xanh
+							mát, sân bóng Đền Lừ 3 đã trở thành địa điểm giao lưu hàng đầu.
+						</p>
+						<p class="fs-5 mb-4">Sân bóng rất đông và luôn kín lịch, bạn
+							muốn thuê sân vào các giờ cao điểm giờ đây sẽ rất khó khăn, hãy
+							liên hệ với chủ sân và đăng ký trước để được chủ sân sắp xếp,
+							các khung giờ thường trong ngày dễ dàng để sắp xếp lịch hơn và
+							chỉ phí cũng tốt hơn rất nhiều.</p>
+						<p class="fs-5 mb-4">Cụm sân gồm 4 sân bóng đá mini, cũng
+							giúp dễ dàng tổ chức thi đấu bóng đá cũng như thi đấu sân bóng
+							11 người dễ dàng. Tìm hiểu ngay với chúng tôi bằng cách liên hệ
+							sđt chủ sân: 098 219 6776</p>
+					</div>
+				</section>
+				<!-- Comments section-->
+				<section id="comment" th:object="${user}">
+					<h2 class="fw-bolder mb-4 mt-5">Bình luận</h2>
+					<div class="card bg-light">
+						<div class="card-body comment" style="padding: 16px; box-sizing: border-box;">
+							<!-- Comment form-->
+							<form class="mb-4">
+								<textarea id="newComment" class="form-control" rows="2"
+									placeholder="Join the discussion and leave a comment!"></textarea>
+								<button class="form-control btn btn-outline-primary" onclick="addComment()"> Thêm bình
+									luận </button>
+								<!-- <input class="form-control btn btn-outline-primary" type="submit" value="Thêm bình luận"  /> -->
+							</form>
+							<!-- Comment with nested comments-->
+							<div class="comment-container">
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+		</div>
+	</div>
+	<!-- Footer-->
+	<footer class="py-5 bg-dark">
+		<div class="container">
+			<p class="m-0 text-center text-white">Copyright &copy; Your
+				Website 2022</p>
+		</div>
+	</footer>
+	<!-- Bootstrap core JS-->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+	<!-- Core theme JS-->
+	<script src="/templates/JS/sportfield.js"></script>
+	<script>
+
+		// Các hằng số
+		const bookingAPI = "/user/bookings"
+		const commentAPI = "/user/comment"
+		const sportFieldInfo = JSON.parse(localStorage.getItem("sport"));
+		const userName = $("#greeting-tag").attr("userName")
+		setHeightandWidth()
+
+		// Hiển thị các comment
+		function renderComment() {
+			$.ajax({
+				type: "GET",
+				url: commentAPI + "/" + sportFieldInfo.id,
+				contentType: "application/json",
+				success: function (comments) {
+					$.each(comments, function (index, data) {
+						$(".comment-container").append(
+							`
+							<div class="userComment userComment-${data.id}" data-id="${data.id}" data-userId="${data.userName}">
+									<div class="commenterInfo">
+										<div class="flex-shrink-0">
+											<img style="height: 70px;width:70px" class="rounded-circle"
+												src="/templates/image/avatar/${data.avatar}" alt="..." />
+										</div>
+										<div class="ms-3" style="flex-grow:1" >
+											<div class="fw-bold" style="display: flex;">${data.userName}
+												<div class="commentDate">${data.createDate}</div>
+											</div>
+											<div class="commentContent commentContent-${data.id}">${data.content}</div>
+											<div class="editedContent editedContent-${data.id}">
+												<textarea class="form-control editArea editArea-${data.id}" > ${data.content} </textarea>
+												<button class="changeComment changeComment-${data.id}" onclick="editComment(${data.id})"><i class="fa-solid fa-play" style="color: #1f5cc7;"></i></button>
+											</div>
+										</div>
+									</div>
+									<div class="commentAction commentAction-${data.id}" style="display: ${data.userName === userName ? 'flex' : 'none'}" >
+										<button class="btn-edit btn-edit-${data.id}" onclick="openEditor(${data.id})">Chỉnh sửa</button>
+										<button class="btn-delete btn-delete-${data.id}" onclick="deleteComment(${data.id})">Xóa</button>
+									</div>
+								</div>
+							`
+						)
+					})
+				}
+			})
+
+		}
+		// Viết comment mới 
+		function addComment() {
+			let comment = {
+				"content": $("#newComment").val()
+			}
+			$.ajax({
+				url: commentAPI + "/" + sportFieldInfo.id,
+				type: "POST",
+				contentType: "application/json",
+				dataType: "json",
+				data: JSON.stringify(comment),
+				success: function (data) {
+					renderComment()
+				}
+
+			})
+		}
+		function deleteComment(id) {
+			$(".userComment-" + id).remove();
+			$.ajax({
+				url: commentAPI + "/" + id,
+				type: "DELETE",
+				success: function (data) {
+					alert("Comment deleted")
+				}
+			})
+		}
+		function editComment(id) {
+			let comment = {
+				"id": id,
+				"content": $(".editArea-" + id).val()
+			}
+			$(".commentContent-" + id).text($(".editArea-" + id).val())
+			openEditor(id)
+			$.ajax({
+				url: commentAPI + "/" + sportFieldInfo.id,
+				type: "PUT",
+				contentType: "application/json",
+				dataType: "json",
+				data: JSON.stringify(comment),
+				success: function (data) {
+					alert("Comment edited")
+				}
+			})
+
+		}
+
+
+
+		// Chèn các thông tin của sân hiện tại vào template sẵn
+		function updatePage(data) {
+			$("#sport_field_name").text("Sân bóng " + data.name)
+			$("#sport_field_address").text(data.address)
+			let src = "/templates/image/"
+			if (data.categoryId == 1)
+				src += "sanbong/";
+			else if (data.categoryId == 2)
+				src += "sancaulong/";
+			else
+				src += "santennis/";
+			$(".image").attr("src", src += data.image)
+			console.log(data.name)
+		}
+		function setHeightandWidth() {
+			$(".image").height($(".form").height())
+			$(".comment").height($(".paragraph").height())
+			$("#description").width($("#sportFieldImage").width())
+		}
+		// console.log($(".paragraph").height())
+		// console.log($(".comment").height())
+
+		// Lấy ra thông tin đặt sân và đặt sân
+		function getBookingInfo(data) {
+			var bookingInfo = {
+				"id": null,
+				"sportFieldId": data.id,
+				"userId": parseInt($('#greeting-tag').attr('userId')),  // Lấy thông tin sân
+				"bookingDate": $("#myDateInput").val(),
+				"bookingTime": $("#time").val(),
+				"price": data.price,
+				"sportFieldName": data.name,
+				"userName": $("#greeting-tag").text()
+			}
+			booking(bookingInfo);
+		}
+		function booking(data) {
+			$.ajax({
+				url: bookingAPI,
+				type: "POST",
+				dataType: "json",
+				contentType: "application/json",
+				data: JSON.stringify(data),               // Gọi API đặt sân
+				success: function (data) {
+					if (data.id != null) {
+						if(data.id==-1){
+							alert("Không thể đặt sân này do quá thời gian")
+						}
+						else alert("Đặt sân thành công!");
+					}
+					else {
+						alert("Sân này đã được đặt vui lòng chọn một khung giờ khác!");
+					}
+				}
+			})
+		}
+
+		// Các hàm liên quan đến button 
+		function openEditor(id) {
+			var tmp = $(".commentContent").outerWidth()    //Hàm hiệu ứng hiện chỉnh sửa
+			$(".commentContent-" + id).toggle()
+			$(".editedContent-" + id).width(tmp).toggle()
+		}
+
+		// Các hàm và biến liên quan đến thêm vào danh sách yêu thích
+		const favoriteAPI= "user/favorite/add"
+		$("#heart").click(function () {
+			// if ($("#heart").hasClass("liked")) {
+			// 	$("#heart").html(`
+			// 		<span>Thêm vào danh sách yêu thích</span> 
+			// 		<i class="fa fa-heart-o" aria-hidden="true"></i>`);
+			// 	$("#heart").removeClass("liked");
+			// } else {
+				$("#heart").html(`
+					<span>Thêm vào danh sách yêu thích</span> 
+					<i class="fa fa-heart" aria-hidden="true"></i>`);
+				$("#heart").addClass("liked");
+				addToFavorite()
+			// }
+		});
+
+		function addToFavorite(){
+			let favoriteDTO ={
+				"user" :parseInt($('#greeting-tag').attr('userId')),
+				"sportField" :  sportFieldInfo.id
+			}
+			$.ajax({
+				url: favoriteAPI,
+				type:"POST",
+				contentType: "application/json",
+				dataType :"TEXT",
+				data : JSON.stringify(favoriteDTO),
+				success: function(message) {
+					alert(message);
+				}
+			})
+		}
+
+		//Chạy các hàm đã viết
+		updatePage(sportFieldInfo)
+		renderComment()
+
+	</script>
+</body>
+
+</html>

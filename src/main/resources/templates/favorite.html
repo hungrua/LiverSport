@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="/templates/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <title>Document</title>
+    <link href="/templates/CSS/shop-homepage.css" rel="stylesheet" />
+    <link href="/templates/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/templates/CSS/sportfield.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/templates/CSS/sportfield2.css" />
+    <link rel="stylesheet" href="/templates/CSS/mycss.css" />
+    <link href="/templates/CSS/shop-homepage.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic"
+        rel="stylesheet" type="text/css" />
+    <script src="https://kit.fontawesome.com/b5df635135.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top header " th:object="${user}">
+        <div class="container nav-container">
+            <a class="navbar-brand nav-items" th:href="@{/user/page}">Liver Sport</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active nav-selection"><a class="nav-link nav-items" style = "color: rgba(255,255,255,.5)"
+                            th:href="@{/booking}">Booking <span class="sr-only">(current)</span></a></li>
+                    <li class="nav-item nav-selection"><a class="nav-link nav-items" th:href="@{/yourMatch}">Your
+                            match</a>
+                    </li>
+                    <li class="nav-item nav-selection"><a style ="color:#ffffff" class="nav-link nav-items" href="#">Favourite</a></li>
+                    <li th:if="${user == null}" class="nav-item" style="display: flex; align-items: center;"><a
+                            class="nav-link" id="login-tag" th:href="@{/login}">Login</a></li>
+                    <li th:if="${user != null}" class="nav-item" style="display: flex; align-items: center;"><a
+                            class="nav-link" id="greeting-tag" th:text="${user.fullName}"
+                            th:attr="userId=${user.id},userName=${user.userName}"></a>
+                    </li>
+                    <li class="nav-item" style="padding: 0 10px;">
+                        <a th:href="@{/user/information}">
+                            <img th:if="${user != null}" th:src="@{'/templates/image/avatar/' +${user.image}}"
+                                style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid aliceblue;object-fit: cover;" />
+                        </a>
+                    </li>
+                    <li th:if="${user != null}" class="nav-item" style="display: flex; align-items: center;"><a
+                            class="nav-link" th:href="@{/}"> <i class="fa-solid fa-right-from-bracket"> </i>
+                        </a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 class="text-center mt-3" id="title-result">Danh sách yêu thích của bạn</h2>
+                <div class="row col-lg-12" id="sportFieldContainer"></div>
+                <!-- /.row -->
+            </div>
+            <!-- /.col-lg-9 -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <script>
+        function renderFavoriteSportField() {
+            $("#sportFieldContainer").empty();
+            let id = parseInt($('#greeting-tag').attr('userId'));
+            $.ajax({
+                type: "GET",
+                url: "/user/favorite/" + id,
+                contentType: 'application/json',
+                success: function (result) {
+                    console.log(result)
+                    console.log(typeof result)
+                    if (result.length != 0) {
+                        $.each(result, function (index, value) {
+                            let typeSportField;
+                            if (value.categoryId == 1) typeSportField = "sanbong";
+                            else if (value.categoryId == 2) typeSportField = "sancaulong";
+                            else typeSportField = "santennis";
+                            $("#sportFieldContainer").append(
+                                `<div class="col-md-6 mb-4 col-lg-3 " id="favorite-${value.id}">
+									<div class="card h-100 h-100p">
+									<img class="card-img-top sport_field_image" style="height: 40%" src="/templates/image/${typeSportField}/${value.image}" alt=""/>
+									<div class="card-body card-bodyp">
+										<h4 class="card-title card-title-p">
+										<a onclick="gotoSportField(${value.id})"  title="Sân ${value.name} "> Sân ${value.name}</a>
+										</h4>
+										<div class="addres"><span class="info-title">Địa chỉ :</span><span class="sf-info">${value.address}</span></div>
+										<div class="price"><span class="info-title">Giá tham khảo :</span> <span class="sf-info price-info"> ${value.price} vnđ/ trận </span></div>
+										<p class="card-text"><span class="info-title">Điểm nhấn :</span> <span class="sf-info">${value.info}</span></p>
+									</div>
+									<div class="info-btn">
+                                        <div>
+                                            <button id="watch-info-btn" style="border-radius : 5px" onclick="gotoSportField(${value.id})"  title="Xem chi tiết sân bóng ${value.name}">Xem chi tiết | Đặt sân </button>\
+                                        </div>
+										<div>
+                                            <button class ="btn-deleteFavorite" style="border-radius : 5px" onclick="deleteFavorite(${value.id})" >Xóa khỏi danh sách yêu thích</button>
+                                        </div>
+                                       
+                                        
+									</div>
+									</div>
+								</div>`
+                            );
+                        });
+                    }
+                    else alert("Danh sách trống")
+                }
+            })
+        }
+        function gotoSportField(id) {
+			$.ajax({
+				type: "GET",
+				url: '/user/field/' + id,
+				contentType: 'application/json',
+				dataType: "json",
+				success: function (result) {
+					localStorage.setItem("sport", JSON.stringify(result));
+					window.location.href = "/sport_field"
+				},
+				error: function () {
+					alert("Error")
+				}
+			})
+		}
+        function deleteFavorite(id){
+            if(confirm("Bạn có chắc là muốn xóa sân này khỏi danh sách yêu thích không?")){
+                $.ajax({
+                    type: "DELETE",
+                    url : 'user/favorite/delete/'+id,
+                    contentType: 'application/json',
+                    success : function(data){
+                        $("#favorite-"+data.id).hide()
+                        alert("Sân đã được xóa khỏi danh sách yêu thích!")
+                    }
+                })
+            }
+        }
+        renderFavoriteSportField()
+    </script>
+</body>
+
+</html>

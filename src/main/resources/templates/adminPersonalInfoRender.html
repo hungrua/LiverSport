@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+
+
+<title>account setting or edit profile - Bootdey.com</title>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link
+	href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet" />
+<link
+	href="https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic"
+	rel="stylesheet" type="text/css" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="/templates/vendor/bootstrap/css/bootstrap.min.css"
+	rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous"/>
+<!-- Google fonts-->
+<link
+	href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet" />
+<link
+	href="https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic"
+	rel="stylesheet" type="text/css" />
+<!-- Custom styles for this template -->
+<script src="https://kit.fontawesome.com/b5df635135.js" crossorigin="anonymous"></script>
+<link href="/templates/CSS/shop-homepage.css" rel="stylesheet" />
+<link rel="stylesheet" href="/templates/CSS/mycss.css" />
+<link rel="stylesheet" href="/templates/CSS/userInfo.css"/>
+<link rel="stylesheet" href="/templates/CSS/userInfoRender.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+</head>
+<body>
+		<nav
+		class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top header "
+		th:object="${user}">
+		<div class="container nav-container">
+			<a class="navbar-brand nav-items" th:href="@{/user/page}">Liver Sport</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#navbarResponsive" aria-controls="navbarResponsive"
+				aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarResponsive">
+				<ul class="navbar-nav ml-auto selections">
+					<li class="nav-item active nav-selection"><a style = "color: rgba(255,255,255,.5)"
+						class="nav-link nav-items" th:href="@{/admin/match}">Booking <span
+							class="sr-only">(current)</span></a></li>
+					<li class="nav-item nav-selection"><a
+						class="nav-link nav-items" th:href="@{/admin/first-login}"> Sân của bạn</a>
+					</li>
+					<li th:if="${user == null}" class="nav-item"
+						style="display: flex; align-items: center;"><a
+						class="nav-link" id="login-tag" th:href="@{/login}">Login</a></li>
+					<li th:if="${user != null}" class="nav-item"
+						style="display: flex; align-items: center;"><a style ="color:#ffffff"
+						class="nav-link" id="greeting-tag" th:text="${user.fullName}"></a>
+					</li>
+					<li class="nav-item" style="padding: 0 10px;"><img
+						th:if="${user != null}"
+						th:src="@{'/templates/image/avatar/' +${user.image}}"
+						style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid aliceblue;object-fit: cover;" />
+					</li>
+					<li th:if="${user != null}" class="nav-item"
+						style="display: flex; align-items: center;"><a
+						class="nav-link" th:href="@{/}"> <i
+							class="fa-solid fa-right-from-bracket"> </i>
+					</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+    <div class="container user-container" th:object="${user}">
+        <div class="row gutters">
+            <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="account-settings">
+                            <div class="user-profile">
+                                <div class="user-avatar">
+                                    <img id="avatar" th:src="@{'/templates/image/avatar/' +${user.image}}" alt=""/>
+                                    <!-- <input type="file" name="" id="avatarInput"/> -->
+                                </div>
+                                    <h5 class="user-name" th:text="${user.userName}"></h5>
+                                    <h6 class="user-email" ><a href="#" class="__cf_email__" data-cfemail="6019150b09202d011817050c0c4e030f0d" th:text="${user.email}"></a></h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="row gutters">
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 personalDetails">
+                                <i class="fa-solid fa-user"></i>
+                                <h6 class="mb-2 text-primary">Personal Details</h6>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label for="fullName">Full Name</label>
+                                    <!-- <input type="text" class="form-control" id="fullName" placeholder="Enter full name" th:value="${user.fullName}"/> -->
+                                    <div class="infoContainer" th:text="${user.fullName}" ></div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label for="eMail">Email</label>
+                                    <!-- <input type="email" class="form-control" id="eMail" placeholder="Enter email ID" th:text="${user.email}"/> -->
+                                    <div class="infoContainer" th:text="${user.email}"></div>
+                                
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label for="phone">Phone</label>
+                                    <!-- <input type="text" class="form-control" id="phone" placeholder="Enter phone number" th:text="${user.phone}"/> -->
+                                    <div class="infoContainer" th:text="${user.phone}"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row gutters">
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 personalDetails">
+                                <i id="address-icon" class="fa-solid fa-map-location-dot"></i>
+                                <h6 class="mt-3 mb-2 text-primary">Address</h6>
+                            </div>
+                    
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label for="ciTy">City</label>
+                                    <!-- <input type="name" class="form-control" id="ciTy" placeholder="Enter City" th:text="${user.city}" /> -->
+                                    <div class="infoContainer" th:text="${user.city}" ></div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label for="District">District</label>
+                                    <!-- <input type="name" class="form-control" id="District" placeholder="Enter District" th:text="${user.district}"/> -->
+                                    <div class="infoContainer" th:text="${user.district}"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row gutters">
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                <div class="text-right">
+                                    <button class="btn btn-primary"><a th:href="@{/admin/information/editPage}" style="text-decoration: none;color: white;">EDIT</a></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://code.jquery.com/jquery-1.10.2.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const image = document.getElementById("avatar")
+        var input = document.getElementById("avatarInput");
+        input.addEventListener("change", () =>{
+            image.src = URL.createObjectURL(input.files[0]);
+            document.getElementById("avatar-url").innerHTML = input.value
+        })
+	
+    </script>
+</body>
+</html>

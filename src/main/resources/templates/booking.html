@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	<meta name="description" content="" />
+	<meta name="author" content="" />
+	<title>Trang chu</title>
+	<!-- Bootstrap core CSS -->
+	<link href="/templates/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+	<!-- Google fonts-->
+	<link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet" />
+	<link href="https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic"
+		rel="stylesheet" type="text/css" />
+	<!-- Custom styles for this template -->
+	<script src="https://kit.fontawesome.com/b5df635135.js" crossorigin="anonymous"></script>
+	<link href="/templates/CSS/shop-homepage.css" rel="stylesheet" />
+	<link rel="stylesheet" href="/templates/CSS/mycss.css" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+</head>
+
+<body>
+	<!-- Navigation -->
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top header " th:object="${user}">
+		<div class="container nav-container">
+			<a class="navbar-brand nav-items" th:href="@{/user/page}">Liver Sport</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+				aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarResponsive">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item active nav-selection"><a class="nav-link nav-items"
+							th:href="@{/booking}">Booking <span class="sr-only">(current)</span></a></li>
+					<li class="nav-item nav-selection"><a class="nav-link nav-items" th:href="@{/yourMatch}">Your
+							match</a>
+					</li>
+					<li class="nav-item nav-selection"><a class="nav-link nav-items" th:href="@{/favorite}" >Favourite</a></li>
+					<li th:if="${user == null}" class="nav-item" style="display: flex; align-items: center;"><a
+							class="nav-link" id="login-tag" th:href="@{/login}">Login</a></li>
+					<li th:if="${user != null}" class="nav-item" style="display: flex; align-items: center;"><a
+							class="nav-link" id="greeting-tag" th:text="${user.fullName}"></a>
+					</li>
+					<li class="nav-item" style="padding: 0 10px;">
+						<a th:href="@{/user/information}">
+							<img th:if="${user != null}" th:src="@{'/templates/image/avatar/' +${user.image}}"
+								style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid aliceblue;object-fit: cover;" />
+						</a>
+					</li>
+					<li th:if="${user != null}" class="nav-item" style="display: flex; align-items: center;"><a
+							class="nav-link" th:href="@{/}"> <i class="fa-solid fa-right-from-bracket"> </i>
+						</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<!-- Page Content -->
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12">
+				<div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
+					<ol class="carousel-indicators">
+						<li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+						<li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+						<li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+					</ol>
+					<div class="carousel-inner" role="listbox">
+						<div class="carousel-item active slider">
+							<img class="d-block img-fluid" style="object-position: top center;"
+								src="/templates/image/slider5.png" alt="First slide" />
+						</div>
+						<div class="carousel-item slider">
+							<img class="d-block img-fluid" style="object-fit: fill;"
+								src="/templates/image/badminton.jpg" alt="Second slide" />
+						</div>
+						<div class="carousel-item slider">
+							<img class="d-block img-fluid" style="object-position: top;"
+								src="/templates/image/tennis2.jpg" alt="Third slide" />
+						</div>
+					</div>
+					<a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+						<span class="carousel-control-prev-icon" aria-hidden="true"></span> <span
+							class="sr-only">Previous</span>
+					</a> <a class="carousel-control-next" href="#carouselExampleIndicators" role="button"
+						data-slide="next"> <span class="carousel-control-next-icon" aria-hidden="true"></span> <span
+							class="sr-only">Next</span>
+					</a>
+				</div>
+				<div class="search">
+					<div class="chose">
+						<select id="cities" onchange="getValueForSecondInput()">
+							<option value="--Thành phố--">--Thành phố--</option>
+							<option value="Hà Nội">Hà Nội</option>
+							<option value="Thành phố Hồ Chí Minh">Thành phố Hồ Chí Minh</option>
+						</select>
+					</div>
+					<div class="chose">
+						<select id="district">
+							<option value="">--Quận huyện--</option>
+						</select>
+					</div>
+					<div class="chose " id="chose-category">
+						<select id="category">
+							<option value="1">Sân bóng đá</option>
+							<option value="2">Sân cầu lông</option>
+							<option value="3">Sân tennis</option>
+						</select>
+					</div>
+					<div class="searcher">
+						<input type="text" id="name" placeholder="Nhập tên sân bóng cần tìm......"></input>
+					</div>
+					<button id="search-btn" onclick="searchByConditions()">
+						Tìm kiếm</button>
+				</div>
+				<h2 id="title-result">Danh sách sân theo tiêu chí của bạn</h2>
+				<div class="row" id="sportFieldContainer"></div>
+				<!-- /.row -->
+			</div>
+			<!-- /.col-lg-9 -->
+		</div>
+		<!-- /.row -->
+	</div>
+	<!-- /.container -->
+	<!-- Footer -->
+	<footer class="py-5 bg-dark">
+		<div class="container">
+			<!-- <p class="m-0 text-center text-white">Copyright &copy; Your Website 2017</p> -->
+		</div>
+		<!-- /.container -->
+	</footer>
+	<!-- Bootstrap core JavaScript -->
+	<script src="/templates/vendor/jquery/jquery.min.js"></script>
+	<script src="/templates/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script>
+		// API dùng để tìm kiếm sân
+		sportFieldFindAPI = "/user/field";
+		//   // Set the value for Seclector
+
+		function getValueForSecondInput() {
+			var options = {
+				'--Thành phố--': {
+					'--Quận huyện--': ""
+				},
+				'Hà Nội': {
+					'--Quận huyện--': "",
+					'Ba Đình': "Ba Đình",
+					'Bắc Từ Liêm': "Bắc Từ Liêm",
+					'Cầu Giấy': "Cầu Giấy",
+					'Đống Đa': "Đống Đa",
+					'Hà Đông': "Hà Đông",
+					'Hai Bà Trưng': "Hai Bà Trưng",
+					'Hoàn Kiếm': 'Hoàn Kiếm',
+					'Hoàng Mai': 'Hoàng Mai',
+					'Long Biên': 'Long Biên',
+					'Nam Từ Liêm': 'Nam Từ Liêm',
+					'Tây Hồ': 'Tây Hồ',
+					'Thanh Xuân': 'Thanh Xuân'
+				},
+				'Thành phố Hồ Chí Minh': {
+					'--Quận huyện--': "",
+					"Bình Chánh": 'Bình Chánh',
+					"Bình Tân": 'Bình Tân',
+					"Bình Thạnh": 'Bình Thạnh',
+					"Cần Giờ": 'Cần Giờ',
+					"Củ Chi": 'Củ Chi',
+					"Quận 1": 'Quận 1',
+					"Quận 2": 'Quận 2',
+					"Quận 3": 'Quận 3',
+					"Quận 4": 'Quận 4',
+					"Quận 5": 'Quận 5',
+					"Quận 6": 'Quận 6',
+					"Quận 7": 'Quận 7',
+					"Quận 8": 'Quận 8',
+					"Quận 9": 'Quận 9',
+					"Quận 10": 'Quận 10',
+					"Quận 11": 'Quận 11',
+					"Quận 12": 'Quận 12',
+					"Gò Vấp": 'Gò Vấp',
+					"Hóc Môn": 'Hóc Môn',
+					"Nhà Bè": 'Nhà Bè',
+					"Phú Nhuận": 'Phú Nhuận',
+					"Tân Bình": 'Tân Bình',
+					"Tân Phú": 'Tân Phú',
+					"Thủ Đức": 'Thủ Đức'
+				}
+
+			};
+			var select1Value = $('#cities').val();
+			var select2Options = options[select1Value];
+			// console.log(select2Options)
+			var select2 = $('#district');
+			select2.empty();
+			for (let [key, value] of Object.entries(select2Options)) {
+				select2.append(`<option value="${value}">${key}</option>`);
+			}
+		}
+		searchByConditions();
+		//Get the search conditions by onclick
+		function searchByConditions() {
+			var test = $('#name').val();
+			let GetObject = {
+				'city': $('#cities').val() != "--Thành phố--" ? $('#cities').val() : null,
+				'district': $('#district').val() != "" ? $('#district').val() : null,
+				'categoryId': parseInt($('#category').val()),
+				'name': test
+			}
+			renderSportFieldByCondition(GetObject)
+			// alert("Done")
+		}
+		function gotoSportField(id) {
+			$.ajax({
+				type: "GET",
+				url: '/user/field/' + id,
+				contentType: 'application/json',
+				dataType: "json",
+				success: function (result) {
+					localStorage.setItem("sport", JSON.stringify(result));
+					window.location.href = "/sport_field"
+				},
+				error: function () {
+					alert("Error")
+				}
+			})
+		}
+		// Post method
+
+		function renderSportFieldByCondition(data) {
+			$("#sportFieldContainer").empty();
+			$.ajax({
+				type: "POST",
+				url: "/user/field",
+				contentType: 'application/json',
+				dataType: "json",
+				data: JSON.stringify(data),
+				success: function (result) {
+					console.log(result)
+					console.log(typeof result)
+					if (result.length != 0) {
+						$.each(result, function (index, value) {
+							let typeSportField;
+							if (value.categoryId == 1) typeSportField = "sanbong";
+							else if (value.categoryId == 2) typeSportField = "sancaulong";
+							else typeSportField = "santennis";
+							$("#sportFieldContainer").append(
+								`<div class="col-lg-4 col-md-6 mb-4 sport_field">
+									<div class="card h-100 h-100p">
+									<img class="card-img-top sport_field_image" style="height: 40%" src="/templates/image/${typeSportField}/${value.image}" alt=""/>
+									<div class="card-body card-bodyp">
+										<h4 class="card-title card-title-p">
+										<a onclick="gotoSportField(${value.id})"  title="Sân ${value.name} "> Sân ${value.name}</a>
+										</h4>
+										<div class="addres"><span class="info-title">Địa chỉ :</span><span class="sf-info">${value.address}</span></div>
+										<div class="price"><span class="info-title">Giá tham khảo :</span> <span class="sf-info price-info"> ${value.price} vnđ/ trận </span></div>
+										<p class="card-text"><span class="info-title">Điểm nhấn :</span> <span class="sf-info">${value.info}</span></p>
+									</div>
+									<div class="info-btn">
+										<button id="watch-info-btn" style="border-radius : 5px" onclick="gotoSportField(${value.id})"  title="Xem chi tiết sân bóng ${value.name}">Xem chi tiết | Đặt sân </button>
+									</div>
+									</div>
+								</div>`
+							);
+						});
+					}
+					else alert("Sân bạn tìm không có trong hệ thống")
+				},
+				error: function () {
+					alert('Không tìm thấy kết quả')
+				}
+			})
+		}
+	</script>
+</body>
+
+</html>

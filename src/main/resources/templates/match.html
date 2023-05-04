@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	<meta name="description" content="" />
+	<meta name="author" content="" />
+	<title>Blog Post - Start Bootstrap Template</title>
+	<!-- Favicon-->
+	<!-- <link rel="icon" type="image/x-icon" href="assets/favicon.ico" /> -->
+	<!-- Core theme CSS (includes Bootstrap)-->
+	<!-- Bootstrap core CSS -->
+	<link href="/templates/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous" />
+	<!-- Google fonts-->
+	<link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet" />
+	<link href="https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic"
+		rel="stylesheet" type="text/css" />
+	<!-- Custom styles for this template -->
+	<script src="https://kit.fontawesome.com/b5df635135.js" crossorigin="anonymous"></script>
+	<link href="/templates/CSS/shop-homepage.css" rel="stylesheet" />
+	<link rel="stylesheet" href="/templates/CSS/mycss.css" />
+	<link rel="stylesheet" href="/templates/CSS/cart.css" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+</head>
+
+<body>
+	<!-- Responsive navbar-->
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top header " th:object="${user}">
+		<div class="container nav-container">
+			<a class="navbar-brand nav-items" th:href="@{/user/page}">Liver Sport</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+				aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarResponsive">
+				<ul class="navbar-nav ml-auto selections">
+					<li class="nav-item active nav-selection"><a class="nav-link nav-items" style = "color: rgba(255,255,255,.5)"
+							th:href="@{/booking}">Booking <span class="sr-only">(current)</span></a></li>
+					<li class="nav-item nav-selection"><a style ="color:#ffffff" class="nav-link nav-items" th:href="@{/yourMatch}">Your
+							match</a>
+					</li>
+					<li class="nav-item nav-selection"><a class="nav-link nav-items"
+							th:href="@{/favorite}">Favourite</a></li>
+					<li th:if="${user == null}" class="nav-item" style="display: flex; align-items: center;"><a
+							class="nav-link" id="login-tag" th:href="@{/login}">Login</a></li>
+					<li th:if="${user != null}" class="nav-item" style="display: flex; align-items: center;"><a
+							class="nav-link" id="greeting-tag" th:text="${user.fullName}"></a>
+					</li>
+					<li class="nav-item" style="padding: 0 10px;">
+						<a th:href="@{/user/information}">
+							<img th:if="${user != null}" th:src="@{'/templates/image/avatar/' +${user.image}}"
+								style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid aliceblue;object-fit: cover;" />
+						</a>
+					</li>
+					<li th:if="${user != null}" class="nav-item" style="display: flex; align-items: center;"><a
+							class="nav-link" th:href="@{/}"> <i class="fa-solid fa-right-from-bracket"> </i>
+						</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<!-- Page content-->
+	<div class="container mt-5 col-lg-10">
+		<div class="row match-row">
+			<div id="head-bar">
+				<a href="#"> Trang chủ </a>/ <a href="#"> Trận đấu </a>
+			</div>
+			<div class="title-contain">
+				<div class="title">
+					<h2>Trận đấu của bạn</h2>
+				</div>
+				<div id="count">
+					<span id="number_sf" th:text="${count}">0</span> trận đấu
+				</div>
+			</div>
+			<!--Match-->
+			<table class="mt-4 col-lg-12 table-striped" id="match">
+				<thead class="col-lg-12 table-dark">
+					<tr>
+						<th>Id</th>
+						<th>Sân</th>
+						<th>Thời gian</th>
+						<th>Ngày</th>
+						<th>Giá</th>
+						<th>Hủy trận đấu</th>
+					</tr>
+				</thead>
+				<tbody class="col-lg-12">
+					<tr th:each="match: ${matches}">
+						<td th:text="${match.id}"></td>
+						<td th:text="${match.sportFieldName}"></td>
+						<td th:text="${match.bookingTime}"></td>
+						<td th:text="${match.bookingDate}" type="date"></td>
+						<td th:text="${match.price}"></td>
+						<td>
+							<form style="margin:0 16px" th:action="@{/user/bookings/{id}(id=${match.id})}"
+								th:method="DELETE" onsubmit="return confirm('Bạn có chắc muốn hủy trận đấu này khỏi danh sách?')">
+								<button class="btn btn-danger">Delete</button>
+							</form>
+						</td>
+					</tr>
+				</tbody>
+
+
+			</table>
+			<div class="title-contain">
+				<a th:href="@{/booking}" style="text-decoration: none;"> Đặt thêm sân</a> <a href="#"
+					style="text-decoration: none;">Thanh toán</a>
+			</div>
+		</div>
+
+	</div>
+	<!-- Footer-->
+	<footer class="py-5 bg-dark pagefooter">
+		<div class="container">
+			<p class="m-0 text-center text-white">Copyright &copy; Your
+				Website 2022</p>
+		</div>
+	</footer>
+	<!-- Bootstrap core JS-->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+	<!-- Core theme JS-->
+	<script>
+		function searchMatchByConditions() {
+			var matchInfo = {}
+		}
+	</script>
+</body>
+
+</html>

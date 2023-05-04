@@ -1,0 +1,64 @@
+:root{
+    --bs-orange: #f4623a;
+}
+.header-bar{
+    margin-right: 0;
+}
+.service{
+    display: flex;
+    justify-content: space-around;
+}
+.feedback{
+    padding: 100px 0;
+}
+.feedback h2{
+    text-align: center;
+}
+hr.divider2{
+    height: 0.2rem;
+    max-width: 25.25rem;
+    margin: 1.5rem auto;
+    background-color: #f4623a;
+    opacity: 1;
+}
+.fb{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 50px;
+    box-sizing: border-box;
+}
+.fb1{
+    width: 40%;
+    border: 1px solid whitesmoke;
+    border-radius: 10px;
+    padding: 40px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    box-sizing: border-box;
+}
+.cus{
+    width: 7em;
+    height: 7em;
+    position: relative;
+    left: -6em;
+    
+}
+.fb1 p{
+    box-sizing: border-box;
+    padding: 20px 0px;
+    position: relative;
+    left: 2em;
+    top: -4em;
+}
+.cus_name{
+    left: 50%;
+    position: relative;
+    top: -5em;
+    font-weight: 800;
+}
+.about-section{
+    padding: 50px 0 !important;
+}
+.service-section{
+    padding: 36px 0px !important;
+}
