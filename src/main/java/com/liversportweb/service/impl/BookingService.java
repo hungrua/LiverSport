@@ -34,7 +34,7 @@ public class BookingService implements IBookingService {
 
 	@Override
 	public BookingDTO save(BookingDTO dto)  {
-		BookingEntity book = bookingRepository.findByBookingTimeAndBookingDate(dto.getBookingTime(),dto.getBookingDate());
+		BookingEntity book = bookingRepository.findByBookingTimeAndBookingDate(dto.getBookingTime(),dto.getBookingDate(),dto.getSportFieldId());
 		if(book != null) {
 			return new BookingDTO();
 		}
@@ -80,7 +80,8 @@ public class BookingService implements IBookingService {
 		List<BookingDTO> result = new ArrayList<BookingDTO>();
 		List<BookingEntity> matches = bookingRepository.findAllByMySportField(id);
 		for(BookingEntity x : matches) {
-			result.add(bookingConverter.toDTO(x));
+			if(check(x.getBookingDate(),x.getBookingTime())) result.add(bookingConverter.toDTO(x));
+			else bookingRepository.delete(x);
 		}
 		Collections.sort(result);
 		return result;

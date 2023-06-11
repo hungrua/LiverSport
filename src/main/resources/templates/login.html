@@ -16,20 +16,20 @@
 </head>
 <body>
     <form id="sign-in" th:action="@{/j_spring_security_check}" method="post" >
-        <h2>Sign in</h2>
+        <h2>Đăng nhập</h2>
         <div class="form-floating mb-3">
             <input type="userName" class="form-control" id="floatingInput" placeholder="userName" name="username" th:required="required"></input>
-            <label for="floatingInput">User Name</label>
+            <label for="floatingInput">Tài khoản</label>
         </div>
         <div class="form-floating">
             <input type="password" class="form-control" id="floatingPass" placeholder="Password" name="password" th:required="required"></input>
-            <label for="floatingPass">Password</label>
+            <label for="floatingPass">Mật khẩu</label>
         </div>
         <div class="alert" style="display: none;"></div>
         <input type="submit" value=" Login " id="submit-btn"></input>
         <div class="newAccount">
-            Don't have an account?
-            <a id="register" th:href="@{/register}">Register</a>
+            Bạn chưa có tài khoản?
+            <a id="register" th:href="@{/register}">Đăng ký</a>
         </div>
     </form>
 

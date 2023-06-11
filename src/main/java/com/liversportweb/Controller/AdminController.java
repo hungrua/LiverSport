@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import com.liversportweb.DTO.BookingDTO;
 import com.liversportweb.DTO.SportFieldDTO;
 import com.liversportweb.DTO.UserDTO;
+import com.liversportweb.repository.SportFieldRepository;
 import com.liversportweb.service.IBookingService;
 import com.liversportweb.service.ISportFieldService;
 import com.liversportweb.service.IUserService;
@@ -61,9 +62,15 @@ public class AdminController {
 		Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
 		String username = loggedInUser.getName();
 		UserDTO user = userService.getUser(username);
-		SportFieldDTO sportField = sportFieldService.save(dto);
-		user.setMySportField(sportField.getId());
-		userService.edit(user, user.getId());
+		if(user.isFirstLogin()==1) {
+			SportFieldDTO sportField = sportFieldService.save(dto);
+			user.setMySportField(sportField.getId());
+			userService.edit(user, user.getId());
+		}
+		else {
+			dto.setId(user.getMySportField());
+			sportFieldService.save(dto);
+		}
 		return "redirect:/admin/match";
 	}
 	
@@ -87,6 +94,6 @@ public class AdminController {
 	public String editUser(UserDTO dto, @PathVariable("id") Long id, Model model) {
 		UserDTO user = userService.edit(dto,id);
 		model.addAttribute("user",user);
-		return "userInfoRender";
+		return "adminPersonalInfoRender";
 	}
 }

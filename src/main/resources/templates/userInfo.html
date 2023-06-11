@@ -47,16 +47,16 @@
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ml-auto selections">
 					<li class="nav-item active nav-selection"><a style = "color: rgba(255,255,255,.5)"
-						class="nav-link nav-items" th:href="@{/booking}">Booking <span
+						class="nav-link nav-items" th:href="@{/booking}">Đặt sân <span
 							class="sr-only">(current)</span></a></li>
 					<li class="nav-item nav-selection"><a
-						class="nav-link nav-items" th:href="@{/yourMatch}">Your match</a>
+						class="nav-link nav-items" th:href="@{/yourMatch}">Trận đấu của bạn</a>
 					</li>
 					<li class="nav-item nav-selection"><a
-						class="nav-link nav-items" th:href="@{/favorite}" >Favourite</a></li>
+						class="nav-link nav-items" th:href="@{/favorite}" >Yêu thích</a></li>
 					<li th:if="${user == null}" class="nav-item"
 						style="display: flex; align-items: center;"><a
-						class="nav-link" id="login-tag" th:href="@{/login}">Login</a></li>
+						class="nav-link" id="login-tag" th:href="@{/login}">Đăng nhập</a></li>
 					<li th:if="${user != null}" class="nav-item"
 						style="display: flex; align-items: center;"><a style ="color:#ffffff"
 						class="nav-link" id="greeting-tag" th:text="${user.fullName}"

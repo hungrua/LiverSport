@@ -14,10 +14,10 @@
 </head>
 <body>
     <form  id="sign-up">
-        <h2>Register</h2>
+        <h2>Đăng ký</h2>
         <div class="form-floating mb-3">
             <input type="userName" class="form-control" id="floatingUserName" placeholder="userName"  th:required="required" ></input>
-            <label for="floatingUserName">User Name</label>
+            <label for="floatingUserName">Tài khoản</label>
         </div>
         <div class="form-floating mb-3">
             <input type="email" class="form-control" id="floatingEmail" placeholder="Email" th:required="required" ></input>
@@ -25,28 +25,28 @@
         </div>
         <div class="form-floating mb-3">
             <input type="password" class="form-control" id="floatingPassword" placeholder="Password" th:required="required" ></input>
-            <label for="floatingPassword">Password</label>
+            <label for="floatingPassword">Mật khẩu</label>
         </div>
         <div class="form-floating mb-3">
             <input type="password" class="form-control" id="floatingPasswordConfirm" placeholder="Password" th:required="required" ></input>
-            <label for="floatingPasswordConfirm">Confirm your password</label>
+            <label for="floatingPasswordConfirm">Xác nhận lại mật khẩu</label>
         </div>
         <div class="roleSelector">
-            <span>Choose your role :</span>
+            <span>Chọn quyền của bạn: </span>
             <div class="roleRadio">
                 <span>
                     <input type="radio"  id="userRole" class="role" value="1" />
-                    <label for="userRole">User</label>
+                    <label for="userRole">Người dùng</label>
                 </span>
                 <span>
                     <input type="radio"  id="adminRole" class="role" value="2" />
-                    <label for="adminRole">Admin</label>
+                    <label for="adminRole">Quản trị viên</label>
                 </span>
             </div>
             
         </div>
-        <button id="create-acc" onclick="createAccount(); return false;">Create account</button>
-        <a id="return-login" th:href= "@{/login}"> Back to sign in</a>
+        <button id="create-acc" onclick="createAccount(); return false;">Tạo tài khoản</button>
+        <a id="return-login" th:href= "@{/login}">Quay lại đăng nhập</a>
     </form>
     <script>
         const newUserApi = "/user/add"

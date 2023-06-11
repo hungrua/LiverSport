@@ -14,8 +14,8 @@ import com.liversportweb.entity.UserEntity;
 public interface BookingRepository extends JpaRepository<BookingEntity, Long> {
 //	List<BookingEntity> findAllByUserId(Long id);
 //	List<BookingEntity> findAllBySportFieldId(Long id);
-//	@Query(value = "select * from booking where bookingTime = '?1' and  bookingDate = '?2' ", nativeQuery = true)
-	BookingEntity findByBookingTimeAndBookingDate(Time time, Date date);
+	@Query(value = "select * from booking where booking_time = ?1 and  booking_date = ?2 and sport_field_id= ?3 ", nativeQuery = true)
+	BookingEntity findByBookingTimeAndBookingDate(@Param("booking_time") Time time,@Param("booking_date") Date date,@Param("sport_field_id") Long id);
 	List<BookingEntity> findAllByUser(UserEntity user);
 	@Query(value="SELECT * FROM booking where sport_field_id =?", nativeQuery = true)
 	List<BookingEntity> findAllByMySportField(@Param("sport_field_id") Long id);

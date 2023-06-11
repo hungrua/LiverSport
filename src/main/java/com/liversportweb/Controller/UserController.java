@@ -17,6 +17,7 @@ public class UserController {
 	public String editUser(UserDTO dto, @PathVariable("id") Long id, Model model) {
 		UserDTO user = userService.edit(dto,id);
 		model.addAttribute("user",user);
-		return "userInfoRender";
+		if(user.getRoleId()==1) return "userInfoRender";
+		else return  "adminPersonalInfoRender";
 	}
 }

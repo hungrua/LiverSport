@@ -29,11 +29,11 @@
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto my-2 my-lg-0">
-                        <li class="nav-item" style="display:flex;align-items: center;" ><a class="nav-link" href="#about">About</a></li>
-                        <li class="nav-item" style="display:flex;align-items: center;"><a class="nav-link" href="#services">Services</a></li>
-                        <li class="nav-item" style="display:flex;align-items: center;"><a class="nav-link" href="#portfolio">Portfolio</a></li>
-                        <li class="nav-item" style="display:flex;align-items: center;"><a class="nav-link" href="#feedback">Feedback</a></li>
-                        <li th:if="${user == null}" class="nav-item" style="display:flex;align-items: center;"><a class="nav-link" id="login-tag" th:href="@{/login}">Login</a></li>
+                        <li class="nav-item" style="display:flex;align-items: center;" ><a class="nav-link" href="#about">Về chúng tôi</a></li>
+                        <li class="nav-item" style="display:flex;align-items: center;"><a class="nav-link" href="#services">Dịch vụ</a></li>
+                        <li class="nav-item" style="display:flex;align-items: center;"><a class="nav-link" href="#portfolio">Đặt sân</a></li>
+                        <li class="nav-item" style="display:flex;align-items: center;"><a class="nav-link" href="#feedback">Phản hồi khách hàng</a></li>
+                        <li th:if="${user == null}" class="nav-item" style="display:flex;align-items: center;"><a class="nav-link" id="login-tag" th:href="@{/login}">Đăng nhập</a></li>
                         <li th:if="${user != null}" class="nav-item" style="display:flex;align-items: center;"><a class="nav-link" id="greeting-tag" th:text="${greeting}" ></a></li>
                         <li class="nav-item" style="padding: 0 10px;">
 							<a th:href="@{/user/information}">
@@ -64,7 +64,7 @@
                     </div>
                     <div class="col-lg-8 align-self-baseline">
                         <p class="text-white-75 mb-5">Liver Sport là một trang web giúp bạn tiết kiệm thời gian trong việc đặt sân thể thao ngay tại nhà chỉ với một vài bước đơn giản</p>
-                        <a class="btn btn-primary btn-xl" href="#about">Find Out More</a>
+                        <a class="btn btn-primary btn-xl" href="#about">Tìm hiểu thêm</a>
                     </div>
                 </div>
             </div>
@@ -77,7 +77,7 @@
                         <h2 class="text-white mt-0">Chúng tôi cung cấp tất cả những gì bạn cần</h2>
                         <hr class="divider divider-light" />
                         <p class="text-white-75 mb-4">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book</p>
-                        <a class="btn btn-light btn-xl" href="#services">Get Started!</a>
+                        <a class="btn btn-light btn-xl" href="#services">Tìm hiểu thêm</a>
                     </div>
                 </div>
             </div>
